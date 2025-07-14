@@ -1,0 +1,23 @@
+.question-card {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+  margin-bottom: 16px;
+}
+.option-btn {
+  padding: 10px 16px;
+  margin: 8px 0;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+.option-btn:hover {
+  background-color: #f0f0f0;
+}
+.option-btn.selected {
+  background-color: #2F3E9E;
+  color: white;
+  border-color: #2F3E9E;
+}

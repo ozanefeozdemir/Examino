@@ -1,0 +1,75 @@
+header {
+  padding: 1rem 2rem;
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #dee2e6;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header .brand {
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1.8rem;
+  color: #333;
+}
+
+.header-right {
+  display: flex;
+  gap: 1rem;
+}
+.custom-btn {
+  padding: 0.5rem 1rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: white;
+  background: linear-gradient(135deg, #4e73df, #224abe);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.custom-btn:hover {
+  background: linear-gradient(135deg, #375ab7, #193897);
+  transform: scale(1.05);
+}
+.fixed-height-table tbody {
+  min-height: 300px;
+  display: block;
+}
+
+.fixed-height-table thead,
+.fixed-height-table tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+.table-container {
+  min-height: 400px; /* tablonun ve pagination'ın toplam yüksekliği kadar ayarla */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* tablo ve pagination arasında boşluk */
+}
+
+.table-container table {
+  /* Tablo kısmının scroll ile sınırlandırılması için: */
+  max-height: 420px; /* tablo kısmının maksimum yüksekliği */
+  overflow-y: auto;
+  display: block;
+  width: 100%;
+}
+
+.pagination-container {
+  /* Pagination bölümü aşağıda sabit kalsın */
+  flex-shrink: 0;
+}
+
+.logout-btn {
+  background: linear-gradient(135deg, #e74c3c, #c0392b);
+}
+
+.logout-btn:hover {
+  background: linear-gradient(135deg, #c0392b, #a93226);
+}
+

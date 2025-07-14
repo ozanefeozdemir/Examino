@@ -1,0 +1,79 @@
+<header>
+    <div class="header-left">
+        <h1><a href="/home" class="brand" routerLinkActive="router-link-active">Examino</a></h1>
+    </div>
+    <h2><strong>Soru Havuzu</strong></h2>
+    <div class="header-right">
+        <button (click)="navigateToProfile()" class="custom-btn">Profil</button>
+        <button (click)="logout()" class="custom-btn logout-btn">Çıkış Yap</button>
+    </div>
+</header>
+
+<div class="main-wrapper">
+    <div class="container mt-3" style="margin-bottom: 80px">
+        <div class="search-container mb-3">
+            <input type="text" class="form-control" placeholder="Soru ara..." [(ngModel)]="searchTerm"
+                (input)="filterQuestions()" />
+        </div>
+
+        <div class="questions-grid">
+            <div class="question-card" *ngFor="let question of pagedQuestions" (click)="openEditModal(question)">
+                <h5 class="question-text">{{ question.text }}</h5>
+
+            </div>
+        </div>
+
+        <!-- Pagination controls -->
+        <nav aria-label="Sayfa navigasyonu" class="mt-3">
+            <ul class="pagination justify-content-center">
+                <li class="page-item" [class.disabled]="currentPage === 1">
+                    <button class="page-link" (click)="previousPage()">‹</button>
+                </li>
+
+                <li class="page-item" *ngFor="let page of [].constructor(totalPages); let i = index"
+                    [class.active]="currentPage === i + 1">
+                    <button class="page-link" (click)="goToPage(i + 1)">{{ i + 1 }}</button>
+                </li>
+
+                <li class="page-item" [class.disabled]="currentPage === totalPages">
+                    <button class="page-link" (click)="nextPage()">›</button>
+                </li>
+            </ul>
+        </nav>
+
+    </div>
+</div>
+<!-- Düzenleme Modalı -->
+<div class="modal" *ngIf="showModal">
+    <div class="modal-content">
+        <h3>Soruyu Düzenle</h3>
+
+        <label>Soru Metni:</label>
+        <textarea [(ngModel)]="updatedQuestion.text"></textarea>
+
+        <label>Seçenekler:</label>
+        <div *ngFor="let option of updatedQuestion.options; let i = index">
+            <input [(ngModel)]="updatedQuestion.options[i]" placeholder="Seçenek {{ i + 1 }}" />
+        </div>
+
+        <label >Doğru Seçenek:</label>
+        <select [(ngModel)]="updatedQuestion.correctOptionIndex" >
+            <option value="0">1</option>
+            <option value="1">2</option>
+            <option value="2">3</option>
+            <option value="3">4</option>
+        </select>
+        <label>Zorluk:</label>
+        <select [(ngModel)]="updatedQuestion.difficulty">
+            <option>Kolay</option>
+            <option>Orta</option>
+            <option>Zor</option>
+        </select>
+
+        <div class="modal-actions">
+            <button class="cancel" (click)="closeModal()">İptal</button>
+            <button class="delete" (click)="deleteQuestion()">Sil</button>
+            <button class="btn btn-success" (click)="updateQuestion()">Kaydet</button>
+        </div>
+    </div>
+</div>

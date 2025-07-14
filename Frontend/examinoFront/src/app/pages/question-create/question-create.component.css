@@ -1,0 +1,114 @@
+html, body {
+  height: auto !important;
+  min-height: 100vh;
+  overflow-y: auto !important;
+}
+header {
+  padding: 1rem 2rem;
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #dee2e6;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header .brand {
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1.8rem;
+  color: #333;
+}
+
+.header-right {
+  display: flex;
+  gap: 1rem;
+}
+
+.question-pool {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.question-card {
+  border: 1px solid #ccc;
+  padding: 10px;
+  width: 48%;
+  cursor: alias;
+  border-radius: 6px;
+  transition: 0.3s;
+}
+
+.question-card.selected {
+  border-color: #007bff;
+  background-color: #eef5ff;
+}
+
+.question-card ul {
+  padding-left: 20px;
+}
+
+.question-card li.correct {
+  font-weight: bold;
+  color: green;
+}
+
+.list-group-item.active {
+  background-color: #000000b7;
+  color: rgb(255, 255, 255);
+  border-color: #ffffff;
+}
+.container {
+  padding-bottom: 80px; /* footer yüksekliği kadar */
+}
+.form-group {
+  margin-bottom: 1rem;
+}
+.list-group-item {
+  min-height: 60px; /* Satır yüksekliğini sabitler */
+  display: flex;
+  color: #000000;
+  font-family: sans-serif;
+  align-items: center; /* Dikeyde ortalar */
+  white-space: pre-wrap; /* Uzun soruların satır kaydırmasına izin verir */
+  overflow-wrap: break-word;
+  padding: 0.75rem 1.25rem;
+}
+
+
+
+.modal-body {
+  display: flex;
+  flex-direction: column;
+  height: 410px; /* Sabit yükseklik */
+}
+
+.modal-body .list-group {
+  flex-grow: 1;
+  overflow-y: auto;
+  margin-bottom: 1rem;
+}
+.custom-btn {
+  padding: 0.5rem 1rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: white;
+  background: linear-gradient(135deg, #4e73df, #224abe);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.custom-btn:hover {
+  background: linear-gradient(135deg, #375ab7, #193897);
+  transform: scale(1.05);
+}
+
+.logout-btn {
+  background: linear-gradient(135deg, #e74c3c, #c0392b);
+}
+
+.logout-btn:hover {
+  background: linear-gradient(135deg, #c0392b, #a93226);
+}

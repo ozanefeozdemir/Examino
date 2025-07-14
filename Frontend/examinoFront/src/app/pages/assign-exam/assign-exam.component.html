@@ -1,0 +1,92 @@
+<header>
+    <div class="header-left">
+        <h1><a href="/home" class="brand" routerLinkActive="router-link-active">Examino</a></h1>
+    </div>
+    <h2><strong>Sınav Listesi</strong></h2>
+    <div class="header-right">
+        <button (click)="navigateToProfile()" class="custom-btn">Profil</button>
+        <button (click)="logout()" class="custom-btn logout-btn">Çıkış Yap</button>
+    </div>
+</header>
+<button (click)="goBack()" class="btn btn-secondary mb-3" style>
+    ‹ Geri
+</button>
+<div class="container mt-4 exam-container">
+
+    <div class="d-flex mb-3">
+        <input type="text" class="form-control w-50" placeholder="Sınav başlığına göre ara..."
+            [(ngModel)]="examSearchQuery" (ngModelChange)="currentExamPage = 1" />
+    </div>
+
+    <div *ngFor="let exam of paginatedExams" class="card exam-card p-2" style="margin-bottom: 5px;">
+        <div class="card-body py-2 px-3 d-flex justify-content-between align-items-center">
+            <h6 class="mb-0">{{ exam.title }}</h6>
+            <button class="btn btn-sm btn-primary" (click)="openStudentModal(exam.id)">Öğrenci Ekle</button>
+        </div>
+    </div>
+
+    <!-- Sınav Sayfaları -->
+    <nav class="mt-3 d-flex justify-content-center">
+        <ul class="pagination">
+            <li class="page-item" [class.disabled]="currentExamPage === 1">
+                <button class="page-link" (click)="previousExamPage()">‹</button>
+            </li>
+
+            <li class="page-item" *ngFor="let page of [].constructor(totalExamPages); let i = index"
+                [class.active]="currentExamPage === i + 1">
+                <button class="page-link" (click)="goToExamPage(i + 1)">
+                    {{ i + 1 }}
+                </button>
+            </li>
+
+            <li class="page-item" [class.disabled]="currentExamPage === totalExamPages">
+                <button class="page-link" (click)="nextExamPage()">›</button>
+            </li>
+        </ul>
+    </nav>
+
+</div>
+
+<!-- Modal -->
+<!-- Modal -->
+<div class="modal" [ngClass]="{ 'd-block': showModal }" style="background: rgba(0,0,0,0.6);">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Öğrenci Seç</h5>
+                <button type="button" class="btn-close" (click)="showModal = false"></button>
+            </div>
+
+            <div class="modal-body modal-scroll">
+                <div *ngFor="let student of paginatedStudents" class="form-check mb-2">
+                    <input type="checkbox" class="form-check-input" [value]="student.id"
+                        (change)="toggleStudent(student.id)">
+                    <label class="form-check-label ms-2">{{ student.fullName }} ({{ student.email }})</label>
+                </div>
+            </div>
+
+            <div class="modal-footer flex-column">
+                <div class="mb-3 d-flex justify-content-center align-items-center gap-2">
+                    <button class="btn btn-outline-secondary btn-sm" (click)="previousPage()"
+                        [disabled]="currentPage === 1">‹</button>
+
+                    <ng-container *ngFor="let page of [].constructor(totalPages); let i = index">
+                        <button class="btn btn-sm"
+                            [ngClass]="{ 'btn-primary': currentPage === i + 1, 'btn-outline-primary': currentPage !== i + 1 }"
+                            (click)="goToPage(i + 1)">
+                            {{ i + 1 }}
+                        </button>
+                    </ng-container>
+
+                    <button class="btn btn-outline-secondary btn-sm" (click)="nextPage()"
+                        [disabled]="currentPage === totalPages">›</button>
+                </div>
+
+                <div class="d-flex justify-content-end w-100">
+                    <button class="btn btn-secondary me-2" (click)="showModal = false">İptal</button>
+                    <button class="btn btn-success" (click)="assignStudentsToExam()">Ekle</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

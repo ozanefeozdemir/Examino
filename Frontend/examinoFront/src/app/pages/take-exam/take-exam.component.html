@@ -1,0 +1,58 @@
+<!-- Sayaç sol üstte sabit -->
+
+
+<h1 style="text-align: center;">{{exam?.title}}</h1>
+<div class="container mt-4" *ngIf="exam">
+  <div
+    style="position: fixed; top: 10px; right: 10px; background: #f8f9fa; padding: 10px 15px; border-radius: 5px; box-shadow: 0 0 5px rgba(0,0,0,0.1); font-weight: bold; font-size: 16px; z-index: 1000;">
+    Süre: {{ formattedTime }}
+  </div>
+  <div class="row">
+
+    <!-- Sol Panel: Soru -->
+    <div class="col-md-8">
+      
+      <div class="question-card">
+        <div class="card-body">
+          <h5>{{ currentIndex + 1 }}. Soru</h5>
+          <p>{{ questions[currentIndex]?.text }}</p>
+
+          <div *ngFor="let opt of questions[currentIndex]?.options; let i = index">
+            <label>
+              <input type="radio" class="option-btn" name="question{{ currentIndex }}" [checked]="answers[currentIndex] === i"
+                (change)="selectAnswer(currentIndex, i)">
+              {{ opt }}
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-3 d-flex justify-content-between">
+        <button class="btn btn-secondary" (click)="previous()" [disabled]="currentIndex === 0">← Önceki</button>
+        <button class="btn btn-secondary" (click)="next()"
+          [disabled]="currentIndex === exam.questions.length - 1">Sonraki →</button>
+      </div>
+    </div>
+
+    <!-- Sağ Panel: Soru Durumları -->
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-body">
+          <h5>Sorular</h5>
+          <div class="d-flex flex-wrap gap-2">
+            <button *ngFor="let q of exam.questions; let i = index" (click)="goToQuestion(i)" class="btn btn-sm"
+              [ngClass]="{
+                      'btn-dark': i === currentIndex,
+                      'btn-success': isAnswered(i) && i !== currentIndex,
+                      'btn-outline-secondary': !isAnswered(i)
+                    }">
+              {{ i + 1 }}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <button class="btn btn-danger mt-3 w-100" (click)="submitExam()">Sınavı Bitir</button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,125 @@
+header {
+  padding: 1rem 2rem;
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #dee2e6;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header .brand {
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1.8rem;
+  color: #333;
+}
+
+.header-right {
+  display: flex;
+  gap: 1rem;
+}
+
+.custom-btn {
+  padding: 0.5rem 1rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: white;
+  background: linear-gradient(135deg, #4e73df, #224abe);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.custom-btn:hover {
+  background: linear-gradient(135deg, #375ab7, #193897);
+  transform: scale(1.05);
+}
+
+.logout-btn {
+  background: linear-gradient(135deg, #e74c3c, #c0392b);
+}
+
+.logout-btn:hover {
+  background: linear-gradient(135deg, #c0392b, #a93226);
+}
+body {
+  background-color: #f4f6f9;
+  font-family: 'Poppins', sans-serif;
+}
+
+.card {
+  border: none;
+  border-radius: 16px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.05);
+  background-color: #fff;
+  transition: transform 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+.card-title {
+  font-family: sans-serif;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.card-text {
+  font-family: sans-serif;
+  font-size: 0.95rem;
+  color: #7f8c8d;
+}
+.btn-primary {
+  background-color: #4e73df;
+  border-color: #4e73df;
+}
+
+.btn-primary:hover {
+  background-color: #375ab7;
+  border-color: #375ab7;
+}
+.btn-secondary {
+  background-color: #1abc9c;
+  border-color: #1abc9c;
+  color: white;
+}
+
+.btn-secondary:hover {
+  background-color: #16a085;
+  border-color: #16a085;
+}
+h2.text-center {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #748ae300;
+}
+
+.custom-header {
+  background: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.welcome-box {
+  background: linear-gradient(135deg, #eef2ff, #d6dfff);
+  border-radius: 12px;
+  padding: 0.5rem 1rem;
+  margin-right: 1rem;
+  box-shadow: 0 2px 6px rgba(78, 115, 223, 0.15);
+}
+
+.welcome-text {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #2c3e50;
+}
+
+.welcome-text strong {
+  font-weight: 600;
+  color: #224abe;
+}

@@ -1,0 +1,76 @@
+<header>
+  <h1><a href="/home" class="brand" routerLinkActive="router-link-active">Examino</a></h1>
+  <div style="display: flex; justify-content: center">
+    <h2 class="section-title"><strong>Sınav Oluştur</strong></h2>
+  </div>
+  <div class="header-right">
+    <button (click)="navigateToProfile()" class="custom-btn">Profil</button>
+    <button (click)="logout()" class="custom-btn logout-btn">Çıkış Yap</button>
+  </div>
+</header>
+<button (click)="goBack()" class="btn btn-secondary mb-3" style>
+  ‹ Geri
+</button>
+<div class="container mt-4" style="display: flex; justify-content: center;">
+  <div class="container mt-5">
+    <div class="card shadow-lg p-4">
+
+      <form (ngSubmit)="createExam_()">
+        <div class="row mb-3">
+          <div class="col-md-4">
+            <label class="form-label">Sınav Başlığı</label>
+            <input type="text" class="form-control" [(ngModel)]="examTitle" name="title" required />
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">Başlangıç Zamanı</label>
+            <input type="datetime-local" class="form-control" [(ngModel)]="startTime" name="startTime" required />
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">Süre (dk)</label>
+            <input type="number" class="form-control" [(ngModel)]="duration" name="duration" min="1" required />
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-md-4">
+            <label class="form-label">Soru Sayısı</label>
+            <input type="number" class="form-control" [(ngModel)]="questionCount" name="questionCount" min="1"
+              required />
+          </div>
+          <div class="col-md-8">
+            <label class="form-label">Zorluk Dağılımı (%)</label>
+            <div class="row gx-2">
+              <div class="col" *ngFor="let key of getDifficultyKeys()">
+                <select class="form-select text-center" [(ngModel)]="difficultyPercentages[key]" [name]="key"
+                  (ngModelChange)="difficultyPercentages[key] = + $event ">
+                  <option *ngFor="let percent of percentageOptions" [value]="percent">{{ percent }}%</option>
+                </select>
+                <small class="d-block text-center mt-1">{{ key }}</small>
+              </div>
+            </div>
+            <div class="mt-2 text-center" 
+              [ngClass]="{'text-success': getTotalDifficulty() === 100, 'text-danger': getTotalDifficulty() !== 100}">
+              Toplam: {{ getTotalDifficulty() }}%
+            </div>
+          </div>
+        </div>
+
+        <div class="text-center mt-4">
+          <button type="submit" class="btn btn-primary btn-lg px-5" [disabled]="loading">Sınavı Oluştur</button>
+        </div>
+
+        <div *ngIf="successMessage" class="alert alert-success mt-3 text-center">{{ successMessage }}
+          <div><button class="btn btn-primary" (click)="navigateToAssignExam()">Öğrenci Ekle</button>
+          </div>
+        </div>
+        <div *ngIf="errorMessage" class="alert alert-danger mt-3 text-center">{{ errorMessage }}</div>
+      </form>
+    </div>
+  </div>
+
+
+
+
+
+
+</div>

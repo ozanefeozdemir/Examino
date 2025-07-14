@@ -1,0 +1,126 @@
+<header>
+  <div class="header-left">
+    <h1><a href="/home" class="brand" routerLinkActive="router-link-active">Examino</a></h1>
+  </div>
+  <h2><strong>Sınav Sonuçları</strong></h2>
+  
+  <div class="header-right">
+    <button (click)="navigateToProfile()" class="custom-btn">Profil</button>
+    <button (click)="logout()" class="custom-btn logout-btn">Çıkış Yap</button>
+  </div>
+</header>
+<div class="container mt-4" style="margin-bottom: 80px;">
+
+  <div class="mb-3" style="max-width: 25%;">
+    <input
+      type="text"
+      class="form-control"
+      placeholder="Öğrenci/Öğretmen veya sınava göre ara"
+      [(ngModel)]="searchQuery"
+      (ngModelChange)="onSearchChange()"
+    />
+  </div>
+
+  <div *ngIf="filteredResults.length === 0" class="alert alert-info">
+    Sınav sonucu bulunamadı.
+  </div>
+<div class="table-container">
+  <table class="table table-striped fixed-height-table" *ngIf="filteredResults.length > 0">
+    <thead>
+      <tr>
+        <th (click)="onSort('solveDate')" style="cursor:pointer">
+          Sınav Tarihi
+          <span *ngIf="sortField === 'solveDate'">
+            <i [class]="sortDirection === 'asc' ? 'bi bi-arrow-up' : 'bi bi-arrow-down'"></i>
+          </span>
+        </th>
+        <th (click)="onSort('studentName')" style="cursor:pointer">
+          Öğrenci Adı
+          <span *ngIf="sortField === 'studentName'">
+            <i [class]="sortDirection === 'asc' ? 'bi bi-arrow-up' : 'bi bi-arrow-down'"></i>
+          </span>
+        </th>
+        <th (click)="onSort('teacherName')" style="cursor:pointer">
+          Öğretmen Adı 
+          <span *ngIf="sortField === 'teacherName'">
+            <i [class]="sortDirection === 'asc' ? 'bi bi-arrow-up' : 'bi bi-arrow-down'"></i>
+          </span>
+        </th>
+        <th (click)="onSort('examTitle')" style="cursor:pointer">
+          Sınav Başlığı
+          <span *ngIf="sortField === 'examTitle'">
+            <i [class]="sortDirection === 'asc' ? 'bi bi-arrow-up' : 'bi bi-arrow-down'"></i>
+          </span>
+        </th>
+        <th (click)="onSort('correctAnswers')" style="cursor:pointer">
+          Doğru Sayısı
+          <span *ngIf="sortField === 'correctAnswers'">
+            <i [class]="sortDirection === 'asc' ? 'bi bi-arrow-up' : 'bi bi-arrow-down'"></i>
+          </span>
+        </th>
+        <th>
+          Yanlış Sayısı
+        </th>
+        <th (click)="onSort('totalQuestions')" style="cursor:pointer">
+          Toplam Soru
+          <span *ngIf="sortField === 'totalQuestions'">
+            <i [class]="sortDirection === 'asc' ? 'bi bi-arrow-up' : 'bi bi-arrow-down'"></i>
+          </span>
+        </th>
+        <th (click)="onSort('score')" style="cursor:pointer">
+          Puan
+          <span *ngIf="sortField === 'score'">
+            <i [class]="sortDirection === 'asc' ? 'bi bi-arrow-up' : 'bi bi-arrow-down'"></i>
+          </span>
+        </th>
+        <th>İşlemler</th>
+      </tr>
+    </thead>
+    <tbody>
+  <!-- Gerçek sonuçlar -->
+  <tr class="text-nowrap" *ngFor="let result of pagedResults">
+    <td>{{ result.solveDate| date:'dd.mm.yyyy, HH:mm'}}</td>
+    <td>{{ result.student.fullName }}</td>
+    <td>{{ result.exam.teacher.fullName }}</td>
+    <td>{{ result.exam.title }}</td>
+    <td>{{ result.correctAnswers }}</td>
+    <td>{{ result.totalQuestions - result.correctAnswers }}</td>
+    <td>{{ result.totalQuestions }}</td>
+    <td>{{ result.score | number:'1.0-2' }}</td>
+    <td>
+      <button class="btn btn-sm btn-info" (click)="viewResultDetail(result.id.toString(), result.student.id.toString())">Detay</button>
+    </td>
+  </tr>
+
+  <!-- Boş satırlar -->
+  <tr *ngFor="let row of emptyRows">
+    <td colspan="8" style="height: 48px;"></td>
+  </tr>
+</tbody>
+
+  </table></div>
+<!-- Sayfalama -->
+<nav *ngIf="totalPages > 1" >
+  <ul class="pagination justify-content-center">
+    <li class="page-item" [class.disabled]="currentPage === 1">
+      <button class="page-link" (click)="goToPreviousPage()">‹</button>
+    </li>
+
+    <li class="page-item"
+        *ngFor="let page of [].constructor(totalPages); let i = index"
+        [class.active]="currentPage === i + 1">
+      <button class="page-link" (click)="goToPage(i + 1)">
+        {{ i + 1 }}
+      </button>
+    </li>
+
+    <li class="page-item" [class.disabled]="currentPage === totalPages">
+      <button class="page-link" (click)="goToNextPage()">›</button>
+    </li>
+  </ul>
+</nav>
+
+  
+
+  <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+</div>

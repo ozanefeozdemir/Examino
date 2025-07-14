@@ -1,0 +1,102 @@
+<header class="custom-header">
+  <div class="header-left">
+    <h1><a href="/home" class="brand" routerLinkActive="router-link-active">Examino</a></h1>
+  </div>
+  <div class="header-right">
+    <div class="welcome-box">
+      <span class="welcome-text">👋 Hoş Geldiniz, <strong>{{ firstName }}</strong></span>
+    </div>
+    <button (click)="navigateToProfile()" class="custom-btn">Profil</button>
+    <button (click)="logout()" class="custom-btn logout-btn">Çıkış Yap</button>
+  </div>
+</header>
+
+
+<button (click)="goBack()" class="btn btn-secondary mb-3" style>
+  ‹ Geri
+</button>
+<div class="container mt-5" *ngIf="currentUser">
+
+
+  <!-- Öğretmen için -->
+  <div *ngIf="currentUser?.role === 'TEACHER'" class="row text-center mt-4">
+
+    <div class="col-md-4 mb-3">
+      <div class="card h-100 shadow">
+        <div class="card-body">
+          <h5 class="card-title">Sınav Oluştur</h5>
+          <p class="card-text">Yeni sınav oluştur ve soruları ekle.</p>
+          <button routerLink="/exam-create" class="btn btn-primary w-100">Oluştur</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4 mb-3">
+      <div class="card h-100 shadow">
+        <div class="card-body">
+          <h5 class="card-title">Öğrenci Ata</h5>
+          <p class="card-text">Oluşturduğun sınvalarına öğrenci ekle</p>
+          <button routerLink="/assign-exam" class="btn btn-primary w-100">Ekle</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 mb-3">
+      <div class="card h-100 shadow">
+        <div class="card-body">
+          <h5 class="card-title">Soru Oluştur</h5>
+          <p class="card-text">Soru havuzuna yeni soru ekle.</p>
+          <button routerLink="/question-create" class="btn btn-primary w-100">Başla</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 mb-3">
+      <div class="card h-100 shadow">
+        <div class="card-body">
+          <h5 class="card-title">Sorular</h5>
+          <p class="card-text">Soru havuzunu görüntüle</p>
+          <button routerLink="/question-pool" class="btn btn-primary w-100">Görüntüle</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 mb-3">
+      <div class="card h-100 shadow">
+        <div class="card-body">
+          <h5 class="card-title">Sınavlarım</h5>
+          <p class="card-text">Oluşturduğun sınavları gör.</p>
+          <button routerLink="/my-exams" class="btn btn-primary w-100">Görüntüle</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 mb-3">
+      <div class="card h-100 shadow">
+        <div class="card-body">
+          <h5 class="card-title">Sonuçlar</h5>
+          <p class="card-text">Öğrenci başarılarını analiz et.</p>
+          <button routerLink="/results" class="btn btn-primary w-100">İncele</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Öğrenci için -->
+  <div *ngIf="currentUser?.role === 'STUDENT'" class="row text-center mt-4">
+    <div class="col-md-6 mb-3">
+      <div class="card h-100 shadow">
+        <div class="card-body">
+          <h5 class="card-title">Sınavlara Katıl</h5>
+          <p class="card-text">Açık sınavları gör ve katıl.</p>
+          <button routerLink="/available-exams" class="btn btn-primary w-100">Sınavları Gör</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 mb-3">
+      <div class="card h-100 shadow">
+        <div class="card-body">
+          <h5 class="card-title">Geçmiş Sonuçlar</h5>
+          <p class="card-text">Çözdüğünüz sınavların sonuçları.</p>
+          <button routerLink="/results" class="btn btn-primary w-100">Sonuçları Gör</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

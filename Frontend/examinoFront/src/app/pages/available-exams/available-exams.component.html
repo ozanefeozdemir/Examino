@@ -1,0 +1,63 @@
+<header>
+  <div class="header-left">
+    <h1><a href="/home" class="brand" routerLinkActive="router-link-active">Examino</a></h1>
+  </div>
+  <h2><strong>Açık Sınavlar</strong></h2>
+  <div class="header-right">
+    <button (click)="navigateToProfile()" class="custom-btn">Profil</button>
+    <button (click)="logout()" class="custom-btn logout-btn">Çıkış Yap</button>
+  </div>
+</header>
+<button (click)="goBack()" class="btn btn-secondary mb-3" style>
+    ‹ Geri
+</button>
+<div class="container mt-4">
+  <div class="search-bar-wrapper">
+    <input type="text" class="form-control search-bar" placeholder="🔍Sınav başlığı ara..." [(ngModel)]="searchQuery"
+      (ngModelChange)="onSearchChange()" />
+  </div>
+  <div *ngIf="availableExams.length === 0" class="alert alert-info">
+    Şu anda çözebileceğiniz bir sınav bulunmamaktadır.
+  </div>
+
+  <div class="table-responsive mt-3" *ngIf="filteredExams.length > 0">
+    <table class="table table-bordered table-striped">
+      <thead class="table-light">
+        <tr>
+          <th>Başlık</th>
+          <th>Başlangıç</th>
+          <th>Süre (dk)</th>
+          <th>İşlem</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let exam of pagedExams">
+          <td>{{ exam.title }}</td>
+          <td>{{ exam.startTime | date:'short' }}</td>
+          <td>{{ exam.duration }}</td>
+          <td>
+            <button class="btn btn-sm btn-primary" (click)="startExam(exam.id)">Sınava Katıl</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+  <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+</div>
+
+<nav *ngIf="totalPages > 1" style="margin-bottom: 80px; margin-top: -40px;">
+  <ul class="pagination justify-content-center">
+    <li class="page-item" [class.disabled]="currentPage === 1">
+      <button class="page-link" (click)="previousPage()">‹</button>
+    </li>
+    <li class="page-item" *ngFor="let page of [].constructor(totalPages); let i = index"
+      [class.active]="currentPage === i + 1">
+      <button class="page-link" (click)="goToPage(i + 1)">{{ i + 1 }}</button>
+    </li>
+    <li class="page-item" [class.disabled]="currentPage === totalPages">
+      <button class="page-link" (click)="nextPage()">›</button>
+    </li>
+  </ul>
+</nav>

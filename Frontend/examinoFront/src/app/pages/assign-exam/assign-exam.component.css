@@ -1,0 +1,103 @@
+/* Header */
+header {
+  padding: 1rem 2rem;
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #dee2e6;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header .brand {
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1.8rem;
+  color: #333;
+}
+
+.header-right {
+  display: flex;
+  gap: 0.8rem;
+}
+
+/* Buttons */
+.custom-btn {
+  padding: 0.45rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: white;
+  background: linear-gradient(135deg, #4e73df, #224abe);
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.custom-btn:hover {
+  background: linear-gradient(135deg, #375ab7, #193897);
+  transform: scale(1.05);
+}
+
+.logout-btn {
+  background: linear-gradient(135deg, #e74c3c, #c0392b);
+}
+
+.logout-btn:hover {
+  background: linear-gradient(135deg, #c0392b, #a93226);
+}
+
+/* Container Styling */
+.exam-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Section Title */
+.section-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+
+/* Cards */
+.exam-card {
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  transition: 0.2s ease-in-out;
+  font-size: 0.9rem;
+}
+
+.exam-card:hover {
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.modal-scroll {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.card-body h6 {
+  font-size: 1rem;
+  font-weight: 500;
+  margin: 0;
+}
+
+.form-check-label {
+  font-size: 0.9rem;
+}
+
+
+/* Modal Body Scroll */
+.modal-scroll {
+  max-height: 400px;
+  overflow-y: auto;
+}
+.pagination .page-link {
+  color: #007bff;
+}
+
+.pagination .page-item.active .page-link {
+  background-color: #007bff;
+  border-color: #007bff;
+  color: white;
+}
