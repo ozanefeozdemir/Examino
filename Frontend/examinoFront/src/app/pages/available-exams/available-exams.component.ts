@@ -26,6 +26,7 @@ export class AvailableExamsComponent implements OnInit {
   currentUser!: User
 
 
+
   constructor(
     private examService: ExamService,
     private authService: AuthService,
@@ -33,68 +34,78 @@ export class AvailableExamsComponent implements OnInit {
     private location: Location
   ) { }
 
-  goBack(){
+  goBack() {
     this.location.back()
   }
 
-  ngOnInit(): void {
-    this.authService.getCurrentUser().subscribe({
-      next: (val) => {this.currentUser = val
+  isExamStarted(startTime: string): boolean {
+    const examTime = new Date(startTime).getTime();
+    const now = Date.now();
 
-    this.examService.getAssignedExams(String(this.currentUser.id)).subscribe({
-      next: (data) => {
-        this.availableExams = data.reverse();
-        this.filteredExams = [...data];
-      },
-      error: () => this.errorMessage = 'Sınavlar yüklenemedi.'
-    });}
+    return examTime < now;
+  }
+
+  ngOnInit(): void {
+
+    this.authService.getCurrentUser().subscribe({
+      next: (val) => {
+        this.currentUser = val
+
+        this.examService.getAssignedExams(String(this.currentUser.id)).subscribe({
+          next: (data) => {
+            this.availableExams = data.reverse();
+            this.filteredExams = [...data];
+          },
+          error: () => this.errorMessage = 'Sınavlar yüklenemedi.'
+        });
+      }
     })
   }
 
-itemsPerPage = 6;
-currentPage = 1;
+  itemsPerPage = 6;
+  currentPage = 1;
 
-get pagedExams() {
-  const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-  return this.filteredExams.slice(startIndex, startIndex + this.itemsPerPage);
-}
-
-get totalPages(): number {
-  return Math.ceil(this.filteredExams.length / this.itemsPerPage);
-}
-goToPage(page: number) {
-  if (page >= 1 && page <= this.totalPages) {
-    this.currentPage = page;
-  }
-}
-
-nextPage() {
-  this.goToPage(this.currentPage + 1);
-}
-
-previousPage() {
-  this.goToPage(this.currentPage - 1);
-}
-
-  
-navigateToProfile(){
-     this.router.navigate(['/profile'])
+  get pagedExams() {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    return this.filteredExams.slice(startIndex, startIndex + this.itemsPerPage);
   }
 
-  logout(){
+  get totalPages(): number {
+    return Math.ceil(this.filteredExams.length / this.itemsPerPage);
+  }
+  goToPage(page: number) {
+    if (page >= 1 && page <= this.totalPages) {
+      this.currentPage = page;
+    }
+  }
+
+  nextPage() {
+    this.goToPage(this.currentPage + 1);
+  }
+
+  previousPage() {
+    this.goToPage(this.currentPage - 1);
+  }
+
+
+  navigateToProfile() {
+    this.router.navigate(['/profile'])
+  }
+
+  logout() {
     confirm("Çıkış yapmak istediğinze emin misiniz ?")
     this.authService.logout()
     this.router.navigate(['/login'])
   }
- onSearchChange() {
-  const query = this.searchQuery.toLowerCase().trim();
-  this.filteredExams = this.availableExams.filter(exam =>
-    exam.title.toLowerCase().includes(query) ||
-    exam.startTime.toLowerCase().includes(query) ||
-    exam.duration.toString().includes(query)
-  );
-  this.currentPage = 1;
-}
+  onSearchChange() {
+    const query = this.searchQuery.toLowerCase().trim();
+    this.filteredExams = this.availableExams.filter(exam =>
+      exam.title.toLowerCase().includes(query) ||
+      exam.startTime.toLowerCase().includes(query) ||
+      exam.duration.toString().includes(query)
+    );
+    this.currentPage = 1;
+  }
 
 
   startExam(examId: string) {

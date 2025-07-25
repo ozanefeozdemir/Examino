@@ -1,16 +1,18 @@
-<header>
-  <div class="header-left">
-    <h1><a href="/home" class="brand" routerLinkActive="router-link-active">Examino</a></h1>
-  </div>
-  <h2><strong>Açık Sınavlar</strong></h2>
-  <div class="header-right">
-    <button (click)="navigateToProfile()" class="custom-btn">Profil</button>
-    <button (click)="logout()" class="custom-btn logout-btn">Çıkış Yap</button>
-  </div>
-</header>
-<button (click)="goBack()" class="btn btn-secondary mb-3" style>
+<!--<header>
+    <div class="header-left">
+      <h1><a href="/home" class="brand" routerLinkActive="router-link-active">Examino</a></h1>
+    </div>
+    <h2><strong>Açık Sınavlar</strong></h2>
+    <div class="header-right">
+      <button (click)="navigateToProfile()" class="custom-btn">Profil</button>
+      <button (click)="logout()" class="custom-btn logout-btn">Çıkış Yap</button>
+    </div>
+  </header>-->
+<div style="margin: 30px">
+  <button (click)="goBack()" class="btn btn-secondary mt-3">
     ‹ Geri
-</button>
+  </button>
+</div>
 <div class="container mt-4">
   <div class="search-bar-wrapper">
     <input type="text" class="form-control search-bar" placeholder="🔍Sınav başlığı ara..." [(ngModel)]="searchQuery"
@@ -33,10 +35,18 @@
       <tbody>
         <tr *ngFor="let exam of pagedExams">
           <td>{{ exam.title }}</td>
-          <td>{{ exam.startTime | date:'short' }}</td>
+          <td>{{ exam.startTime | date:'dd/MM/yyy HH:mm' }}</td>
           <td>{{ exam.duration }}</td>
           <td>
-            <button class="btn btn-sm btn-primary" (click)="startExam(exam.id)">Sınava Katıl</button>
+            <button class="btn btn-sm" [ngClass]="{
+              'btn-primary': isExamStarted(exam.startTime),
+              'btn-secondary': !isExamStarted(exam.startTime)
+              }" [disabled]="!isExamStarted(exam.startTime)"
+              [title]="!isExamStarted(exam.startTime) ? 'Sınav henüz başlamadı' : 'Sınava katıl'"
+              (click)="startExam(exam.id)">
+              Sınava Katıl
+            </button>
+
           </td>
         </tr>
       </tbody>

@@ -1,4 +1,4 @@
-<header>
+<!--<header>
     <div class="header-left">
         <h1><a href="/home" class="brand" routerLinkActive="router-link-active">Examino</a></h1>
     </div>
@@ -8,7 +8,12 @@
         <button (click)="logout()" class="custom-btn logout-btn">Çıkış Yap</button>
     </div>
 </header>
-
+-->
+<div style="margin: 30px">
+<button (click)="goBack()" class="btn btn-secondary mt-3" >
+    ‹ Geri
+</button>
+</div>
 <div class="main-wrapper">
     <div class="container mt-3" style="margin-bottom: 80px">
         <div class="search-container mb-3">
@@ -52,12 +57,13 @@
         <textarea [(ngModel)]="updatedQuestion.text"></textarea>
 
         <label>Seçenekler:</label>
-        <div *ngFor="let option of updatedQuestion.options; let i = index">
-            <input [(ngModel)]="updatedQuestion.options[i]" placeholder="Seçenek {{ i + 1 }}" />
+        <div *ngFor="let option of updatedQuestion.options; let i = index; trackBy: trackByIndex">
+            <input [ngModel]="option" (ngModelChange)="onOptionChange(i, $event)" placeholder="Seçenek {{ i + 1 }}" />
         </div>
 
-        <label >Doğru Seçenek:</label>
-        <select [(ngModel)]="updatedQuestion.correctOptionIndex" >
+
+        <label>Doğru Seçenek:</label>
+        <select [(ngModel)]="updatedQuestion.correctOptionIndex">
             <option value="0">1</option>
             <option value="1">2</option>
             <option value="2">3</option>

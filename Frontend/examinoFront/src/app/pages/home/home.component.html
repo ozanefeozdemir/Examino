@@ -1,20 +1,8 @@
-<header class="custom-header">
-  <div class="header-left">
-    <h1><a href="/home" class="brand" routerLinkActive="router-link-active">Examino</a></h1>
-  </div>
-  <div class="header-right">
-    <div class="welcome-box">
-      <span class="welcome-text">👋 Hoş Geldiniz, <strong>{{ firstName }}</strong></span>
-    </div>
-    <button (click)="navigateToProfile()" class="custom-btn">Profil</button>
-    <button (click)="logout()" class="custom-btn logout-btn">Çıkış Yap</button>
-  </div>
-</header>
 
 
-<button (click)="goBack()" class="btn btn-secondary mb-3" style>
-  ‹ Geri
-</button>
+
+
+
 <div class="container mt-5" *ngIf="currentUser">
 
 
@@ -80,7 +68,7 @@
 
   <!-- Öğrenci için -->
   <div *ngIf="currentUser?.role === 'STUDENT'" class="row text-center mt-4">
-    <div class="col-md-6 mb-3">
+    <div class="col-md-6 mb-3" style="margin-top: 100px;">
       <div class="card h-100 shadow">
         <div class="card-body">
           <h5 class="card-title">Sınavlara Katıl</h5>
@@ -89,7 +77,7 @@
         </div>
       </div>
     </div>
-    <div class="col-md-6 mb-3">
+    <div class="col-md-6 mb-3" style="margin-top: 100px;">
       <div class="card h-100 shadow">
         <div class="card-body">
           <h5 class="card-title">Geçmiş Sonuçlar</h5>

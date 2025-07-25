@@ -1,17 +1,37 @@
 <!-- Sayaç sol üstte sabit -->
+<div class="container" style="max-width: 1630px;">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="transform: scale(1.2);">
+    <a style="margin-left: 20px;" class="navbar-brand" href="/home">Examino</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <div
+        style="margin-left: 600px; background: #f8f9fa; padding: 10px 15px; border-radius: 5px; box-shadow: 0 0 5px rgba(0,0,0,0.1); font-weight: bold; font-size: 16px; z-index: 1000;">
+        Süre: {{ formattedTime }}
+      </div>
+    </div>
+  </nav>
+</div>
 
-
-<h1 style="text-align: center;">{{exam?.title}}</h1>
+<h1 style="text-align: center;
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: #2c3e50; /* koyu mavi-gri ton */
+  margin: 20px 0 40px 0;
+  padding: 10px 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  letter-spacing: 1.2px;
+  text-transform: capitalize;">{{exam?.title}}</h1>
 <div class="container mt-4" *ngIf="exam">
-  <div
-    style="position: fixed; top: 10px; right: 10px; background: #f8f9fa; padding: 10px 15px; border-radius: 5px; box-shadow: 0 0 5px rgba(0,0,0,0.1); font-weight: bold; font-size: 16px; z-index: 1000;">
-    Süre: {{ formattedTime }}
-  </div>
+
   <div class="row">
 
     <!-- Sol Panel: Soru -->
     <div class="col-md-8">
-      
+
       <div class="question-card">
         <div class="card-body">
           <h5>{{ currentIndex + 1 }}. Soru</h5>
@@ -19,8 +39,8 @@
 
           <div *ngFor="let opt of questions[currentIndex]?.options; let i = index">
             <label>
-              <input type="radio" class="option-btn" name="question{{ currentIndex }}" [checked]="answers[currentIndex] === i"
-                (change)="selectAnswer(currentIndex, i)">
+              <input type="radio" class="option-btn" name="question{{ currentIndex }}"
+                [checked]="answers[currentIndex] === i" (change)="selectAnswer(currentIndex, i)">
               {{ opt }}
             </label>
           </div>

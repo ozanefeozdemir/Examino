@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Result } from '../../model/result.model';
 import { ResultService } from '../../service/result/result.service';
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../service/auth/auth.service';
 
@@ -20,10 +20,13 @@ export class ResultsComponent implements OnInit {
   searchQuery = ''; // tek arama kutusu
 
   // sıralama için
-  sortField: keyof Result | 'studentName' | 'examTitle' | 'teacherName' | 'solveDate' = 'examTitle';
-  sortDirection: 'asc' | 'desc' = 'asc';
+  sortField: keyof Result | 'studentName' | 'examTitle' | 'teacherName' | 'solveDate' = 'solveDate';
+  sortDirection: 'asc' | 'desc' = 'desc';
 
-  constructor(private resultService: ResultService, private router: Router, private authService: AuthService) { }
+  constructor(private resultService: ResultService, private router: Router, private authService: AuthService, private location: Location) { }
+  goBack() {
+    this.location.back()
+  }
 
   ngOnInit(): void {
     this.loadResults();
@@ -86,61 +89,61 @@ export class ResultsComponent implements OnInit {
   pagedResults: Result[] = []; // Şu anki sayfadaki veriler
 
   applyFilterAndSort() {
-  const query = this.searchQuery.toLowerCase().trim();
+    const query = this.searchQuery.toLowerCase().trim();
 
-  this.filteredResults = this.results.filter(r =>
-    r.student.fullName.toLowerCase().includes(query) ||
-    r.exam.title.toLowerCase().includes(query) ||
-    r.exam.teacher.fullName.toLowerCase().includes(query)
-  );
+    this.filteredResults = this.results.filter(r =>
+      r.student.fullName.toLowerCase().includes(query) ||
+      r.exam.title.toLowerCase().includes(query) ||
+      r.exam.teacher.fullName.toLowerCase().includes(query)
+    );
 
-  this.filteredResults.sort((a, b) => {
-    let valA: any;
-    let valB: any;
+    this.filteredResults.sort((a, b) => {
+      let valA: any;
+      let valB: any;
 
-    switch (this.sortField) {
-      case 'studentName':
-        valA = a.student.fullName.toLowerCase();
-        valB = b.student.fullName.toLowerCase();
-        break;
-      case 'teacherName':
-        valA = a.exam.teacher.fullName.toLowerCase();
-        valB = b.exam.teacher.fullName.toLowerCase();
-        break;
-      case 'examTitle':
-        valA = a.exam.title.toLowerCase();
-        valB = b.exam.title.toLowerCase();
-        break;
-      case 'correctAnswers':
-        valA = a.correctAnswers;
-        valB = b.correctAnswers;
-        break;
-      case 'totalQuestions':
-        valA = a.totalQuestions;
-        valB = b.totalQuestions;
-        break;
-      case 'score':
-        valA = a.score;
-        valB = b.score;
-        break;
-      case 'solveDate':
-        valA = new Date(a.solveDate).getTime();
-        valB = new Date(b.solveDate).getTime();
-        break;
-      default:
-        valA = '';
-        valB = '';
-    }
+      switch (this.sortField) {
+        case 'studentName':
+          valA = a.student.fullName.toLowerCase();
+          valB = b.student.fullName.toLowerCase();
+          break;
+        case 'teacherName':
+          valA = a.exam.teacher.fullName.toLowerCase();
+          valB = b.exam.teacher.fullName.toLowerCase();
+          break;
+        case 'examTitle':
+          valA = a.exam.title.toLowerCase();
+          valB = b.exam.title.toLowerCase();
+          break;
+        case 'correctAnswers':
+          valA = a.correctAnswers;
+          valB = b.correctAnswers;
+          break;
+        case 'totalQuestions':
+          valA = a.totalQuestions;
+          valB = b.totalQuestions;
+          break;
+        case 'score':
+          valA = a.score;
+          valB = b.score;
+          break;
+        case 'solveDate':
+          valA = new Date(a.solveDate).getTime();
+          valB = new Date(b.solveDate).getTime();
+          break;
+        default:
+          valA = '';
+          valB = '';
+      }
 
-    if (valA < valB) return this.sortDirection === 'asc' ? -1 : 1;
-    if (valA > valB) return this.sortDirection === 'asc' ? 1 : -1;
-    return 0;
-  });
+      if (valA < valB) return this.sortDirection === 'asc' ? -1 : 1;
+      if (valA > valB) return this.sortDirection === 'asc' ? 1 : -1;
+      return 0;
+    });
 
-  this.totalPages = Math.ceil(this.filteredResults.length / this.pageSize);
-  this.currentPage = 1;
-  this.updatePagedResults();
-}
+    this.totalPages = Math.ceil(this.filteredResults.length / this.pageSize);
+    this.currentPage = 1;
+    this.updatePagedResults();
+  }
 
 
   onSearchChange() {

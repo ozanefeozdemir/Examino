@@ -185,11 +185,11 @@ export class ExamCreateComponent implements OnInit {
     }
 
     const startTimeDate = new Date(this.startTime);
-    const isoStartTime = startTimeDate.toISOString().slice(0, 19);  // Örn: "2025-07-07T13:30:00"
+    const isoStartTime = startTimeDate.toISOString()  // Örn: "2025-07-07T13:30:00"
 
     const examRequest = {
       title: this.examTitle,
-      startTime: isoStartTime,
+      startTime: isoStartTime ,
       duration: parseInt(this.duration.toString()),
       questionCount: this.questionCount,
       difficultyPercentages: this.difficultyPercentages

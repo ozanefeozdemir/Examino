@@ -30,10 +30,8 @@ export class LoginComponent {
     this.authService.login(loginRequest).subscribe({
       next: () => {
         this.loading = false;
-        this.router.navigate(['/home']); // Giriş başarılıysa anasayfaya yönlendir
       },
       error: (err) => {
-        
         this.errorMessage = err.error?.message || 'Kullanıcı bilgileri hatalı';
       }
     });

@@ -3,9 +3,10 @@ import { Router } from '@angular/router';
 import { QuestionRequest, QuestionResponse, QuestionService } from '../../service/question/question.service';
 import { ExamService } from '../../service/exam/exam.service';
 import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { AuthService } from '../../service/auth/auth.service';
 import { User } from '../../model/user.model';
+import * as XLSX from 'xlsx';
 import { ExamRequest } from '../../service/exam/exam.service';
 @Component({
   selector: 'app-exam-create',
@@ -39,8 +40,12 @@ export class QuestionCreateComponent implements OnInit {
   errorMessage = '';
 
   constructor(private examService: ExamService, private questionService: QuestionService, private router: Router,
-    private authService: AuthService
+    private authService: AuthService, private location: Location
   ) { }
+
+  goBack(){
+    this.location.back()
+  }
 
   ngOnInit(): void {
     this.loadQuestionPool();
@@ -207,6 +212,59 @@ export class QuestionCreateComponent implements OnInit {
       this.errorMessage = 'Soru eklenemedi.';
     }
   });
+}
+
+
+handleFileInput(event: any) {
+  const file: File = event.target.files[0];
+
+  if (!file) return;
+
+  const reader = new FileReader();
+
+  reader.onload = (e: any) => {
+    const data = new Uint8Array(e.target.result);
+    const workbook = XLSX.read(data, { type: 'array' });
+
+    const sheetName = workbook.SheetNames[0];
+    const worksheet = workbook.Sheets[sheetName];
+
+    const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 }) as any[][];
+
+    // İlk satırı başlık kabul et, kalan satırlar veri
+    const questionRows = jsonData.slice(1);
+
+    questionRows.forEach((row, index) => {
+      // Her satır: [soruMetni, seçenek1, seçenek2, seçenek3, seçenek4, doğruIndex, zorluk]
+      if (row.length < 7) return;
+
+      const [text, ...rest] = row;
+      const options = rest.slice(0, 4);
+      const correctOptionIndex = parseInt(rest[4]);
+      const difficulty = rest[5];
+
+      const question: QuestionRequest = {
+        text: text,
+        options: options,
+        correctOptionIndex: correctOptionIndex,
+        difficulty: difficulty
+      };
+
+      this.questionService.createQuestion(question).subscribe({
+        next: () => {
+          console.log(`Soru eklendi: ${text}`);
+        },
+        error: () => {
+          console.error(`Soru eklenemedi: ${text}`);
+        }
+      });
+    });
+
+    alert('Sorular başarıyla eklendi');
+    this.loadQuestionPool(); // Havuzu güncelle
+  };
+
+  reader.readAsArrayBuffer(file);
 }
 
 }

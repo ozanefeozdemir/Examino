@@ -5,7 +5,6 @@ import { Router, RouterLink } from '@angular/router';
 import { User } from '../../model/user.model';
 import { FormsModule } from '@angular/forms';
 
-
 @Component({
   selector: 'app-home',
   standalone: true,

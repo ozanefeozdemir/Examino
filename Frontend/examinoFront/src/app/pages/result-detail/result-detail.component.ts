@@ -4,7 +4,7 @@ import { AuthService } from '../../service/auth/auth.service';
 import { ResultService } from '../../service/result/result.service';
 import { StudentAnswer } from '../../model/student-answer.model';
 import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { Result } from '../../model/result.model';
 import { Exam } from '../../model/exam.model';
 
@@ -26,8 +26,13 @@ export class ResultDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private authService: AuthService,
-    private resultService: ResultService
+    private resultService: ResultService,
+    private location: Location
   ) { }
+
+  goBack(){
+    this.location.back()
+  }
 
   ngOnInit(): void {
     this.resultId = this.route.snapshot.paramMap.get('resultId');
@@ -54,7 +59,6 @@ export class ResultDetailComponent implements OnInit {
       }
     });
   }
-
 
   loadResultDetail() {
     this.resultService.getAnswersByStudentIdAndExamId(this.studentId, this.exam.id).subscribe({

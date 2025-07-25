@@ -4,7 +4,7 @@ import { AuthService } from '../../service/auth/auth.service';
 import { Exam } from '../../model/exam.model';
 import { ExamResponse, ExamService } from '../../service/exam/exam.service';
 import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { QuestionResponse, QuestionService } from '../../service/question/question.service';
 import { ResultService } from '../../service/result/result.service';
 import { ResultsComponent } from '../results/results.component';
@@ -23,7 +23,11 @@ export class ViewExamComponent implements OnInit{
   studentList: string[] = []
   teacherName = ''
 
-  constructor(private router: Router, private resultService: ResultService, private questionService: QuestionService, private route: ActivatedRoute, private authService: AuthService, private examService: ExamService) { }
+  constructor(private router: Router,private location:Location, private resultService: ResultService, private questionService: QuestionService, private route: ActivatedRoute, private authService: AuthService, private examService: ExamService) { }
+
+  goBack(){
+    this.location.back()
+  }
 
   ngOnInit(): void {
     this.examId = this.route.snapshot.paramMap.get('id')

@@ -1,4 +1,4 @@
-<header>
+<!--<header>
     <div class="header-left">
         <h1><a href="/home" class="brand" routerLinkActive="router-link-active">Examino</a></h1>
     </div>
@@ -7,7 +7,12 @@
         <button (click)="logout()" class="custom-btn logout-btn">Çıkış Yap</button>
     </div>
 </header>
-
+-->
+<div style="margin: 30px">
+<button (click)="goBack()" class="btn btn-secondary mt-3" >
+    ‹ Geri
+</button>
+</div>
 <div class="container mt-4" style="background-color: white; margin-bottom: 80px;">
 
   <!-- Sınav Detay Kartı -->
@@ -18,7 +23,7 @@
       <div class="row g-3">
         <div class="col-md-6">
           <p class="mb-1"><strong>👨‍🏫 Öğretmen:</strong> {{ teacherName }}</p>
-          <p class="mb-1"><strong>📅 Başlangıç Tarihi:</strong> {{ exam.startTime | date:'full' }}</p>
+          <p class="mb-1"><strong>📅 Başlangıç Tarihi:</strong> {{ exam.startTime | date:'EEEE, d MMMM  y, HH:mm ' }}</p>
         </div>
         <div class="col-md-6">
           <p class="mb-1"><strong>⏱️ Süre:</strong> {{ exam.duration }} dakika</p>

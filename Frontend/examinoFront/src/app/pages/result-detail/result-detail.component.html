@@ -1,21 +1,17 @@
-<header>
-  <div class="header-left">
-    <h1><a href="/home" class="brand" routerLinkActive="router-link-active">Examino</a></h1>
-  </div>
-  <h2><strong>Sınav Detayı</strong></h2>
-  <div class="header-right">
-    <button (click)="navigateToProfile()" class="custom-btn">Profil</button>
-    <button (click)="logout()" class="custom-btn logout-btn">Çıkış Yap</button>
-  </div>
-</header>
-
+<div style="margin: 30px">
+<button (click)="goBack()" class="btn btn-secondary mt-3" >
+    ‹ Geri
+</button>
+</div>
 <div class="container mt-4" style="margin-bottom: 80px;">
 
-
   <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
-
+ 
   <div *ngFor="let sa of studentAnswers; let i = index" class="mb-4">
-  <h5 style="color: white;">{{ i + 1 }}. {{ sa.question.text }}</h5>
+    <div class="container">
+      <h5 style="color: rgb(0, 0, 0);">{{ i + 1 }}. {{ sa.question.text }} ({{sa.question.difficulty}})</h5>
+    </div>
+  
   <ul class="list-group">
     <li
       *ngFor="let option of sa.question.options; let idx = index"
@@ -23,11 +19,12 @@
       [ngClass]="{
         'list-group-item-success': option === sa.question.options[sa.question.correctOptionIndex],
         'list-group-item-danger': option === sa.answerText && option !== sa.question.options[sa.question.correctOptionIndex],
-        'fw-bold': option === sa.answerText
+        'bold': option === sa.answerText
       }"
     >
       {{ option }}
     </li>
+  
   </ul>
 </div>
 

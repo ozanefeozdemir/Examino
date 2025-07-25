@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Question } from '../../model/question.model';
 import { QuestionRequest, QuestionResponse, QuestionService } from '../question/question.service';
 import { Exam } from '../../model/exam.model';
+import { User } from '../../model/user.model';
 
 export interface ExamRequest {
   title: string;
@@ -94,6 +95,8 @@ export class ExamService {
     return this.http.get<ExamResponse[]>(`${this.baseUrl}/assigned?studentId=${studentId}`);
   }
 
-
+  getAssignedStudents(examId: string | null): Observable<User[]>{
+    return this.http.get<User[]>(`${this.baseUrl}/${examId}/students`)
+  }
 
 }

@@ -1,14 +1,22 @@
+<!--
 <header>
     <div class="header-left">
         <h1><a href="/home" class="brand" routerLinkActive="router-link-active">Examino</a></h1>
     </div>
-<div style="display: flex; justify-content: center">
-    <h2 class="section-title"><strong>Soru Oluştur</strong></h2>
-  </div>    <div class="header-right">
+    <div style="display: flex; justify-content: center">
+        <h2 class="section-title"><strong>Soru Oluştur</strong></h2>
+    </div>
+    <div class="header-right">
         <button (click)="navigateToProfile()" class="custom-btn">Profil</button>
         <button (click)="logout()" class="custom-btn logout-btn">Çıkış Yap</button>
     </div>
 </header>
+-->
+<div style="margin: 30px">
+<button (click)="goBack()" class="btn btn-secondary mt-3" >
+    ‹ Geri
+</button>
+</div>
 <div class="container mt-5" style="display: flex; justify-content: center;">
     <div class="col-md-6">
         <div class="card">
@@ -62,10 +70,16 @@
                                 </option>
                             </select>
                         </div>
-
+                        <!-- Excel yükleme butonu -->
+                        <input type="file" class="custom-file-input" accept=".csv, .xlsx" style="display: none;"
+                            (change)="handleFileInput($event)" #fileInput />
+                        <button type="button" class="btn btn-info mb-3" (click)="fileInput.click()">
+                            Excel/CSV ile soru ekle
+                        </button>
 
                         <button type="submit" class="btn btn-primary mt-2" style="margin-bottom: 15px;">Soruyu Havuz
-                            Ekle</button>
+                            Ekle
+                        </button>
                     </div>
                     <div *ngIf="successMessage" class="alert alert-success mt-2">{{ successMessage }}</div>
                     <div *ngIf="errorMessage" class="alert alert-danger mt-2">{{ errorMessage }}</div>

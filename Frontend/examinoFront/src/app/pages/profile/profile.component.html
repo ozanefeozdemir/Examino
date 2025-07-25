@@ -1,6 +1,12 @@
-<header>
+<!--<header>
   <h1><a href="/home" class="brand" routerLinkActive="router-link-active">Examino</a></h1>
 </header>
+-->
+<div style="margin: 30px">
+<button (click)="goBack()" class="btn btn-secondary mt-3" >
+    ‹ Geri
+</button>
+</div>
 <div class="container mt-4">
   <div class="card profile-card shadow-sm p-4">
     <div class="row align-items-center">
@@ -19,8 +25,33 @@
         <p class="mb-1"><strong>Email:</strong> {{ user?.email }}</p>
         <p class="mb-1"><strong>Rol:</strong> {{ user?.role }}</p>
 
-        <button class="btn btn-outline-primary" (click)="editProfile()">Profili Düzenle</button>
+        <button class="btn btn-outline-primary" (click)="openEditModal()">Profili Düzenle</button>
       </div>
     </div>
+  </div>
+</div>
+
+<!-- Düzenleme Modalı -->
+<div class="modal-backdrop" *ngIf="showModal">
+  <div class="modal-content">
+    <h4>Profili Düzenle</h4>
+    <form (ngSubmit)="saveProfile()">
+      <div class="mb-3">
+        <label>Ad Soyad</label>
+        <input type="text" class="form-control" [(ngModel)]="userEdit.fullName" name="fullName" required />
+      </div>
+      <div class="mb-3">
+        <label>Email</label>
+        <input type="email" class="form-control" [(ngModel)]="userEdit.email" name="email" required />
+      </div>
+      <div class="mb-3">
+        <label>Rol</label>
+        <input type="text" class="form-control" [(ngModel)]="userEdit.role" name="role" disabled />
+      </div>
+      <div class="d-flex justify-content-end">
+        <button type="button" class="btn btn-secondary me-2" (click)="closeModal()">İptal</button>
+        <button type="submit" class="btn btn-primary">Kaydet</button>
+      </div>
+    </form>
   </div>
 </div>

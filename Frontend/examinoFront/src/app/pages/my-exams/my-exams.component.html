@@ -1,4 +1,4 @@
-<header>
+<!--<header>
   <div class="header-left">
     <h1><a href="/home" class="brand" routerLinkActive="router-link-active">Examino</a></h1>
   </div>
@@ -7,7 +7,12 @@
     <button (click)="navigateToProfile()" class="custom-btn">Profil</button>
     <button (click)="logout()" class="custom-btn logout-btn">Çıkış Yap</button>
   </div>
-</header>
+</header>-->
+<div style="margin: 30px">
+<button (click)="goBack()" class="btn btn-secondary mt-3" >
+    ‹ Geri
+</button>
+</div>
 <div class="container mt-4">
   <div class="mb-3" style="display: flex; max-width: 25%;">
     <input type="text" class="form-control" placeholder="Öğrenci/Öğretmen veya sınava göre ara"
@@ -17,7 +22,7 @@
     Henüz sınav oluşturmadınız.
   </div>
 
-  <div class="table-wrapper">
+  <div class="table-wrapper" style="background-color: #fff; border-radius: 20px;">
     <table class="table table-striped" *ngIf="exams.length > 0">
       <thead>
         <tr>

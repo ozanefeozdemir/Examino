@@ -43,3 +43,8 @@ header .brand {
 .logout-btn:hover {
   background: linear-gradient(135deg, #c0392b, #a93226);
 }
+
+.bold{
+  font-weight: bold;
+  color: black
+}

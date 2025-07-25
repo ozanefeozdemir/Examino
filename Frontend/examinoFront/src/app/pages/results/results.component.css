@@ -45,20 +45,6 @@ header .brand {
   width: 100%;
   table-layout: fixed;
 }
-.table-container {
-  min-height: 400px; /* tablonun ve pagination'ın toplam yüksekliği kadar ayarla */
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between; /* tablo ve pagination arasında boşluk */
-}
-
-.table-container table {
-  /* Tablo kısmının scroll ile sınırlandırılması için: */
-  max-height: 420px; /* tablo kısmının maksimum yüksekliği */
-  overflow-y: auto;
-  display: block;
-  width: 100%;
-}
 
 .pagination-container {
   /* Pagination bölümü aşağıda sabit kalsın */
@@ -73,3 +59,22 @@ header .brand {
   background: linear-gradient(135deg, #c0392b, #a93226);
 }
 
+.table th {
+  vertical-align: middle;
+}
+
+.table td {
+  vertical-align: middle;
+}
+
+.table-hover tbody tr:hover {
+  background-color: #f1f1f1;
+}
+
+.table-responsive {
+  overflow-x: auto;
+}
+
+.table thead th {
+  white-space: nowrap;
+}

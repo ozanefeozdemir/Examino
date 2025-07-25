@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Route, Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthService } from '../../service/auth/auth.service';
 import { ExamResponse, ExamService } from '../../service/exam/exam.service';
-import { UserService } from '../../service/user.service';
+import { UserService } from '../../service/user/user.service';
 import { User } from '../../model/user.model';
 import { FormsModule } from '@angular/forms';
 import { CommonModule, Location } from '@angular/common';
@@ -56,16 +56,27 @@ export class AssignExamComponent {
   }
 
   openStudentModal(examId: string) {
-    this.selectedExamId = examId;
-    this.selectedStudentIds = [];
-    this.userService.getAllUsers('STUDENT').subscribe({
-      next: (res) => {
-        this.students = res.reverse();
-        this.currentPage = 1; // Her açıldığında en baştan başlasın
-        this.showModal = true;
-      }
-    });
-  }
+  this.selectedExamId = examId;
+  this.selectedStudentIds = [];
+
+  // 1. Öğrenci listesini ve sınava atanmış öğrencileri aynı anda çek
+  forkJoin({
+    allStudents: this.userService.getAllUsers('STUDENT'),
+    assignedStudents: this.examService.getAssignedStudents(examId)
+  }).subscribe({
+    next: ({ allStudents, assignedStudents }) => {
+      this.students = allStudents.reverse();
+      this.selectedStudentIds = assignedStudents.map((s: User) => s.id); // sadece ID'leri al
+      this.currentPage = 1;
+      this.showModal = true;
+    },
+    error: (err) => {
+      console.error('Modal verileri alınamadı', err);
+      alert('Modal verileri yüklenemedi.');
+    }
+  });
+}
+
 
   toggleStudent(studentId: number) {
     const index = this.selectedStudentIds.indexOf(studentId);

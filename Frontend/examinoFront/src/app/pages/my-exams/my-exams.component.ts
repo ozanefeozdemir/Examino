@@ -3,7 +3,7 @@ import { ExamResponse, ExamService } from '../../service/exam/exam.service';
 import { Router } from '@angular/router';
 import { AuthService } from '../../service/auth/auth.service';
 import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { QuestionResponse, QuestionService } from '../../service/question/question.service';
 
 @Component({
@@ -25,7 +25,11 @@ export class MyExamsComponent implements OnInit {
   currentPage = 1;
   itemsPerPage = 7;
 
-  constructor(private examService: ExamService, private questionService: QuestionService, private router: Router, private authService: AuthService) { }
+  constructor(private location: Location,private examService: ExamService, private questionService: QuestionService, private router: Router, private authService: AuthService) { }
+
+  goBack(){
+    this.location.back()
+  }
 
   ngOnInit(): void {
     this.loadExams();

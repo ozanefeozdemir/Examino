@@ -2,12 +2,12 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { Router } from '@angular/router';
-import {jwtDecode} from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
 import { User } from '../../model/user.model';
 
 export interface LoginRequest {
   email: string;
-  password: string; 
+  password: string;
 }
 
 export interface RegisterRequest {
@@ -37,7 +37,7 @@ export interface DecodedToken {
 export class AuthService {
   private baseUrl = 'http://localhost:8080/api/auth';
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router) { }
 
   login(request: LoginRequest): Observable<{ token: string }> {
     return this.http.post<{ token: string }>(`${this.baseUrl}/login`, request).pipe(
@@ -48,34 +48,36 @@ export class AuthService {
         localStorage.setItem('role', decoded.roles[0]);
         //localStorage.setItem('fullName', decoded.fullName);
         localStorage.setItem('email', decoded.sub);
+        window.location.href = '/home';
       })
     );
+    
   }
 
-  
+
   getUserFullName(): string | null {
-  const token = this.getToken();
-  if (!token) return null;
+    const token = this.getToken();
+    if (!token) return null;
 
-  const decoded = this.decodeToken(token);
-  return decoded.sub; 
-}
+    const decoded = this.decodeToken(token);
+    return decoded.sub;
+  }
 
-getUserRole(): string | null {
- /* const token = this.getToken();
-  if (!token) return null;
+  getUserRole(): string | null {
+    /* const token = this.getToken();
+     if (!token) return null;
+   
+     const decoded = this.decodeToken(token);
+     return decoded.roles?.[0] || null; // ilk rol*/
+    return localStorage.getItem('role')
+  }
 
-  const decoded = this.decodeToken(token);
-  return decoded.roles?.[0] || null; // ilk rol*/
-  return localStorage.getItem('role')
-}
 
-  
   register(request: RegisterRequest): Observable<any> {
     return this.http.post(`${this.baseUrl}/register`, request);
   }
 
-  getCurrentUser(): Observable<User>{
+  getCurrentUser(): Observable<User> {
     return this.http.get<User>("http://localhost:8080/api/users/email/" + this.getUserEmail())
   }
 
@@ -96,14 +98,14 @@ getUserRole(): string | null {
   getUserEmail(): string | null {
     return localStorage.getItem('email');
   }
-/*
-  getUserRole(): string | null {
-    return localStorage.getItem('role');
-  }
-
-  getUserFullName(): string | null {
-    return localStorage.getItem('fullName');
-  }*/
+  /*
+    getUserRole(): string | null {
+      return localStorage.getItem('role');
+    }
+  
+    getUserFullName(): string | null {
+      return localStorage.getItem('fullName');
+    }*/
 
   isLoggedIn(): boolean {
     const token = this.getToken();

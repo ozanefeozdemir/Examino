@@ -1,4 +1,4 @@
-<header>
+<!--<header>
   <h1><a href="/home" class="brand" routerLinkActive="router-link-active">Examino</a></h1>
   <div style="display: flex; justify-content: center">
     <h2 class="section-title"><strong>Sınav Oluştur</strong></h2>
@@ -7,10 +7,12 @@
     <button (click)="navigateToProfile()" class="custom-btn">Profil</button>
     <button (click)="logout()" class="custom-btn logout-btn">Çıkış Yap</button>
   </div>
-</header>
-<button (click)="goBack()" class="btn btn-secondary mb-3" style>
-  ‹ Geri
+</header>-->
+<div style="margin: 30px">
+<button (click)="goBack()" class="btn btn-secondary mt-3" >
+    ‹ Geri
 </button>
+</div>
 <div class="container mt-4" style="display: flex; justify-content: center;">
   <div class="container mt-5">
     <div class="card shadow-lg p-4">
@@ -40,15 +42,18 @@
           <div class="col-md-8">
             <label class="form-label">Zorluk Dağılımı (%)</label>
             <div class="row gx-2">
-              <div class="col" *ngFor="let key of getDifficultyKeys()">
+              <div class="col d-flex flex-column align-items-center" *ngFor="let key of getDifficultyKeys()">
                 <select class="form-select text-center" [(ngModel)]="difficultyPercentages[key]" [name]="key"
-                  (ngModelChange)="difficultyPercentages[key] = + $event ">
-                  <option *ngFor="let percent of percentageOptions" [value]="percent">{{ percent }}%</option>
+                  (ngModelChange)="difficultyPercentages[key] = +$event" style="width: 100px;">
+                  <option *ngFor="let percent of percentageOptions" [value]="percent">
+                    {{ percent }}%
+                  </option>
                 </select>
-                <small class="d-block text-center mt-1">{{ key }}</small>
+                <small class="text-center mt-1 fw-semibold">{{ key }}</small>
               </div>
             </div>
-            <div class="mt-2 text-center" 
+
+            <div class="mt-2 text-center"
               [ngClass]="{'text-success': getTotalDifficulty() === 100, 'text-danger': getTotalDifficulty() !== 100}">
               Toplam: {{ getTotalDifficulty() }}%
             </div>

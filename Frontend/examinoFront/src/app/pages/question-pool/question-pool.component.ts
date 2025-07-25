@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../service/auth/auth.service';
 import { QuestionService, QuestionResponse, QuestionRequest } from '../../service/question/question.service';
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -30,8 +30,13 @@ export class QuestionPoolComponent implements OnInit {
   constructor(
     private router: Router,
     private authService: AuthService,
-    private questionService: QuestionService
+    private questionService: QuestionService,
+    private location: Location
   ) { }
+
+  goBack(){
+    this.location.back()
+  }
 
   ngOnInit(): void {
     this.loadQuestions();
@@ -47,6 +52,13 @@ export class QuestionPoolComponent implements OnInit {
     });
   }
 
+onOptionChange(index: number, value: string) {
+  this.updatedQuestion.options[index] = value;
+}
+
+trackByIndex(index: number, item: any): number {
+  return index;
+}
 
 
   // Pagination ayarları
